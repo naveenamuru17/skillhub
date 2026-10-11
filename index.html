@@ -1,0 +1,2439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Online Learning Platform</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#222;
+}
+
+header{
+    background:#4f46e5;
+    color:white;
+    padding:15px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 8px;
+    font-weight:bold;
+}
+
+nav a:hover{
+    text-decoration:underline;
+}
+
+section{
+    padding:50px 7%;
+}
+
+.hero{
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    color:white;
+    text-align:center;
+    padding:90px 20px;
+}
+
+.hero h1{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:19px;
+    margin-bottom:25px;
+}
+
+.btn{
+    display:inline-block;
+    padding:12px 20px;
+    background:#4f46e5;
+    color:white;
+    text-decoration:none;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin:5px;
+}
+
+.hero .btn{
+    background:white;
+    color:#4f46e5;
+}
+
+.search-box{
+    width:100%;
+    max-width:600px;
+    padding:14px;
+    margin:20px auto;
+    display:block;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.course-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.course-card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.1);
+}
+
+.course-card h3{
+    color:#4f46e5;
+    margin-bottom:10px;
+}
+
+.course-card p{
+    line-height:1.6;
+}
+
+.course-icon{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.reader{
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 3px 15px rgba(0,0,0,.1);
+    display:none;
+}
+
+.lesson-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:20px 0;
+}
+
+.lesson-buttons button{
+    padding:10px 14px;
+    border:none;
+    background:#e0e7ff;
+    color:#3730a3;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.lesson-buttons button:hover{
+    background:#4f46e5;
+    color:white;
+}
+
+.lesson-content{
+    line-height:1.8;
+}
+
+.lesson-content h2{
+    color:#4f46e5;
+    margin-bottom:15px;
+}
+
+.lesson-content h3{
+    margin-top:20px;
+    color:#333;
+}
+
+.lesson-content p{
+    margin:10px 0;
+}
+
+.lesson-content ul{
+    margin-left:25px;
+}
+
+pre{
+    background:#111827;
+    color:#f9fafb;
+    padding:18px;
+    border-radius:8px;
+    overflow-x:auto;
+    margin:15px 0;
+}
+
+.video-btn{
+    display:inline-block;
+    background:#dc2626;
+    color:white;
+    padding:12px 18px;
+    border-radius:7px;
+    text-decoration:none;
+    margin:15px 0;
+}
+
+.progress-box{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.1);
+    margin-bottom:20px;
+}
+
+.progress-bar{
+    width:100%;
+    height:22px;
+    background:#ddd;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress-fill{
+    height:100%;
+    background:#4f46e5;
+    width:0%;
+    transition:.4s;
+}
+
+.login-box{
+    max-width:450px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 3px 15px rgba(0,0,0,.1);
+}
+
+.login-box input{
+    width:100%;
+    padding:13px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:7px;
+}
+
+.quiz-box{
+    max-width:800px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 3px 15px rgba(0,0,0,.1);
+}
+
+.question{
+    margin:25px 0;
+}
+
+.question label{
+    display:block;
+    margin:10px 0;
+}
+
+.certificate{
+    display:none;
+    text-align:center;
+    background:white;
+    padding:50px;
+    border:8px solid #4f46e5;
+    border-radius:10px;
+}
+
+footer{
+    background:#111827;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+.dark{
+    background:#111827;
+    color:white;
+}
+
+.dark .course-card,
+.dark .reader,
+.dark .progress-box,
+.dark .login-box,
+.dark .quiz-box,
+.dark .certificate{
+    background:#1f2937;
+    color:white;
+}
+
+.dark input{
+    background:#374151;
+    color:white;
+}
+
+@media(max-width:700px){
+    header{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    nav a{
+        font-size:13px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">🎓 LearnHub</div>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#courses">Courses</a>
+<a href="#dashboard">Dashboard</a>
+<a href="#quiz">Quiz</a>
+<a href="#login">Login</a>
+<a href="#" onclick="toggleDark()">🌙</a>
+</nav>
+
+</header>
+
+
+<!-- HOME -->
+
+<section class="hero" id="home">
+
+<h1>Learn Programming Online</h1>
+
+<p>Learn Programming Languages, Web Development, AI and Data Structures.</p>
+
+<a href="#courses" class="btn">Explore Courses</a>
+
+</section>
+
+
+<!-- COURSES -->
+
+<section id="courses">
+
+<h2>📚 Our Courses</h2>
+
+<input
+type="text"
+id="search"
+class="search-box"
+placeholder="Search courses..."
+onkeyup="searchCourses()"
+>
+
+
+<div class="course-container" id="courseContainer">
+
+
+<!-- PYTHON -->
+
+<div class="course-card" data-name="python">
+
+<div class="course-icon">🐍</div>
+
+<h3>Python Programming</h3>
+
+<p>
+Learn Python from beginner level to advanced concepts.
+Variables, conditions, loops, functions, lists, OOP and projects.
+</p>
+
+<a href="#reader" class="btn" onclick="openCourse('python')">
+📖 Learn Now
+</a>
+
+</div>
+
+
+<!-- JAVA -->
+
+<div class="course-card" data-name="java">
+
+<div class="course-icon">☕</div>
+
+<h3>Java Programming</h3>
+
+<p>
+Learn Java programming including variables, loops,
+arrays, classes, objects, inheritance and exception handling.
+</p>
+
+<a href="#reader" class="btn" onclick="openCourse('java')">
+📖 Learn Now
+</a>
+
+</div>
+
+
+<!-- WEB -->
+
+<div class="course-card" data-name="web development html css javascript">
+
+<div class="course-icon">🌐</div>
+
+<h3>Web Development</h3>
+
+<p>
+Learn HTML, CSS and JavaScript and create your own websites.
+</p>
+
+<a href="#reader" class="btn" onclick="openCourse('web')">
+📖 Learn Now
+</a>
+
+</div>
+
+
+<!-- DSA -->
+
+<div class="course-card" data-name="data structures algorithms dsa">
+
+<div class="course-icon">🧠</div>
+
+<h3>Data Structures</h3>
+
+<p>
+Learn arrays, linked lists, stacks, queues, sorting,
+searching, trees and graphs.
+</p>
+
+<a href="#reader" class="btn" onclick="openCourse('dsa')">
+📖 Learn Now
+</a>
+
+</div>
+
+
+<!-- AI -->
+
+<div class="course-card" data-name="artificial intelligence ai">
+
+<div class="course-icon">🤖</div>
+
+<h3>Artificial Intelligence</h3>
+
+<p>
+Learn AI concepts, intelligent agents, search algorithms,
+heuristics and A* algorithm.
+</p>
+
+<a href="#reader" class="btn" onclick="openCourse('ai')">
+📖 Learn Now
+</a>
+
+</div>
+
+
+<!-- ML -->
+
+<div class="course-card" data-name="machine learning ml">
+
+<div class="course-icon">📊</div>
+
+<h3>Machine Learning</h3>
+
+<p>
+Learn supervised learning, unsupervised learning,
+classification, regression and model evaluation.
+</p>
+
+<a href="#reader" class="btn" onclick="openCourse('ml')">
+📖 Learn Now
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- COURSE READER -->
+
+<section id="reader">
+
+<div class="reader" id="readerBox">
+
+<h1 id="courseTitle"></h1>
+
+<p id="courseDescription"></p>
+
+<div class="lesson-buttons" id="lessonButtons"></div>
+
+<div class="lesson-content" id="lessonContent"></div>
+
+<button class="btn" onclick="completeLesson()">
+✅ Mark Lesson Complete
+</button>
+
+<button class="btn" onclick="closeCourse()">
+❌ Close Course
+</button>
+
+</div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard">
+
+<h2>📊 Student Dashboard</h2>
+
+<div class="progress-box">
+
+<h3>Your Learning Progress</h3>
+
+<p id="progressText">0% completed</p>
+
+<div class="progress-bar">
+
+<div class="progress-fill" id="progressFill"></div>
+
+</div>
+
+</div>
+
+<div class="progress-box">
+
+<h3>Available Courses</h3>
+
+<p>🐍 Python Programming</p>
+<p>☕ Java Programming</p>
+<p>🌐 Web Development</p>
+<p>🧠 Data Structures</p>
+<p>🤖 Artificial Intelligence</p>
+<p>📊 Machine Learning</p>
+
+</div>
+
+</section>
+
+
+<!-- LOGIN -->
+
+<section id="login">
+
+<div class="login-box">
+
+<h2>🔐 Student Login</h2>
+
+<input
+type="text"
+id="studentName"
+placeholder="Enter your name"
+>
+
+<input
+type="email"
+id="studentEmail"
+placeholder="Enter email"
+>
+
+<button class="btn" onclick="login()">
+Login
+</button>
+
+<p id="loginMessage"></p>
+
+</div>
+
+</section>
+
+
+<!-- QUIZ -->
+
+<section id="quiz">
+
+<h2>📝 Programming Quiz</h2>
+
+<div class="quiz-box">
+
+
+<div class="question">
+
+<h3>1. Which language is known as a beginner-friendly programming language?</h3>
+
+<label>
+<input type="radio" name="q1" value="python">
+Python
+</label>
+
+<label>
+<input type="radio" name="q1" value="java">
+Java
+</label>
+
+<label>
+<input type="radio" name="q1" value="html">
+HTML
+</label>
+
+</div>
+
+
+<div class="question">
+
+<h3>2. Which tag is used to create a paragraph in HTML?</h3>
+
+<label>
+<input type="radio" name="q2" value="p">
+&lt;p&gt;
+</label>
+
+<label>
+<input type="radio" name="q2" value="h1">
+&lt;h1&gt;
+</label>
+
+<label>
+<input type="radio" name="q2" value="div">
+&lt;div&gt;
+</label>
+
+</div>
+
+
+<div class="question">
+
+<h3>3. Which keyword is used to create a class in Java?</h3>
+
+<label>
+<input type="radio" name="q3" value="class">
+class
+</label>
+
+<label>
+<input type="radio" name="q3" value="function">
+function
+</label>
+
+<label>
+<input type="radio" name="q3" value="define">
+define
+</label>
+
+</div>
+
+
+<div class="question">
+
+<h3>4. Which data structure follows FIFO?</h3>
+
+<label>
+<input type="radio" name="q4" value="queue">
+Queue
+</label>
+
+<label>
+<input type="radio" name="q4" value="stack">
+Stack
+</label>
+
+<label>
+<input type="radio" name="q4" value="tree">
+Tree
+</label>
+
+</div>
+
+
+<div class="question">
+
+<h3>5. What does AI stand for?</h3>
+
+<label>
+<input type="radio" name="q5" value="artificial">
+Artificial Intelligence
+</label>
+
+<label>
+<input type="radio" name="q5" value="automatic">
+Automatic Internet
+</label>
+
+<label>
+<input type="radio" name="q5" value="advanced">
+Advanced Information
+</label>
+
+</div>
+
+
+<button class="btn" onclick="submitQuiz()">
+Submit Quiz
+</button>
+
+<h2 id="quizResult"></h2>
+
+</div>
+
+</section>
+
+
+<!-- CERTIFICATE -->
+
+<section>
+
+<div class="certificate" id="certificate">
+
+<h1>🏆 Certificate of Completion</h1>
+
+<br>
+
+<h2 id="certificateName">
+Student
+</h2>
+
+<p>
+has successfully completed the Online Learning Platform course.
+</p>
+
+<br>
+
+<h2>🎓 LearnHub</h2>
+
+<p>Online Learning Platform</p>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>© 2026 LearnHub - Online Learning Platform</p>
+
+<p>Learn • Practice • Grow</p>
+
+</footer>
+
+
+<script>
+
+/* ==============================
+   COURSE DATA
+================================ */
+
+const courses = {
+
+python: {
+
+title:"🐍 Python Programming",
+
+description:"Complete beginner-friendly Python programming course.",
+
+lessons:[
+
+{
+title:"Python Introduction",
+content:`
+
+<h2>Python Introduction</h2>
+
+<p>
+Python is a high-level, interpreted programming language.
+It is popular because its syntax is simple and easy to understand.
+</p>
+
+<h3>Uses of Python</h3>
+
+<ul>
+<li>Web development</li>
+<li>Artificial Intelligence</li>
+<li>Machine Learning</li>
+<li>Data Science</li>
+<li>Automation</li>
+<li>Game development</li>
+</ul>
+
+<h3>First Python Program</h3>
+
+<pre>
+print("Hello World")
+</pre>
+
+<p>
+The print() function is used to display information on the screen.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Python+beginner+tutorial">
+▶ Watch Python Beginner Tutorial
+</a>
+`
+},
+
+{
+title:"Variables & Data Types",
+content:`
+
+<h2>Variables and Data Types</h2>
+
+<p>
+A variable is a name used to store data.
+</p>
+
+<pre>
+name = "Harish"
+age = 20
+marks = 90.5
+</pre>
+
+<h3>Common Data Types</h3>
+
+<ul>
+<li>int - Integer</li>
+<li>float - Decimal</li>
+<li>str - String</li>
+<li>bool - Boolean</li>
+<li>list - Collection</li>
+<li>tuple - Collection</li>
+<li>dict - Key-value collection</li>
+</ul>
+
+<pre>
+age = 20
+name = "Student"
+passed = True
+
+print(age)
+print(name)
+print(passed)
+</pre>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Python+variables+data+types+tutorial">
+▶ Watch Variables Tutorial
+</a>
+`
+},
+
+{
+title:"If Else",
+content:`
+
+<h2>If Else Statements</h2>
+
+<p>
+Conditional statements are used to make decisions.
+</p>
+
+<pre>
+age = 18
+
+if age >= 18:
+    print("Eligible")
+else:
+    print("Not Eligible")
+</pre>
+
+<h3>Comparison Operators</h3>
+
+<ul>
+<li>&gt; Greater than</li>
+<li>&lt; Less than</li>
+<li>== Equal</li>
+<li>!= Not equal</li>
+<li>&gt;= Greater than or equal</li>
+<li>&lt;= Less than or equal</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Python+if+else+tutorial">
+▶ Watch If Else Tutorial
+</a>
+`
+},
+
+{
+title:"Loops",
+content:`
+
+<h2>Loops in Python</h2>
+
+<p>
+Loops are used to repeat a block of code.
+</p>
+
+<h3>For Loop</h3>
+
+<pre>
+for i in range(1,6):
+    print(i)
+</pre>
+
+<h3>While Loop</h3>
+
+<pre>
+i = 1
+
+while i <= 5:
+    print(i)
+    i += 1
+</pre>
+
+<p>
+The for loop is commonly used when the number of repetitions is known.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Python+loops+for+while+tutorial">
+▶ Watch Python Loops
+</a>
+`
+},
+
+{
+title:"Functions",
+content:`
+
+<h2>Functions</h2>
+
+<p>
+A function is a reusable block of code.
+</p>
+
+<pre>
+def add(a,b):
+    return a+b
+
+result = add(10,20)
+
+print(result)
+</pre>
+
+<p>
+Functions help us avoid repeating the same code.
+</p>
+
+<h3>Advantages</h3>
+
+<ul>
+<li>Code reusability</li>
+<li>Easy debugging</li>
+<li>Better organization</li>
+<li>Easy maintenance</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Python+functions+tutorial">
+▶ Watch Functions Tutorial
+</a>
+`
+},
+
+{
+title:"Lists",
+content:`
+
+<h2>Lists in Python</h2>
+
+<p>
+A list stores multiple values in one variable.
+</p>
+
+<pre>
+numbers = [10,20,30,40]
+
+print(numbers)
+print(numbers[0])
+
+numbers.append(50)
+
+print(numbers)
+</pre>
+
+<h3>Common List Functions</h3>
+
+<ul>
+<li>append()</li>
+<li>insert()</li>
+<li>remove()</li>
+<li>pop()</li>
+<li>sort()</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Python+lists+tutorial">
+▶ Watch Python Lists
+</a>
+`
+},
+
+{
+title:"Object Oriented Programming",
+content:`
+
+<h2>Object Oriented Programming</h2>
+
+<p>
+OOP is a programming approach based on classes and objects.
+</p>
+
+<h3>Class</h3>
+
+<p>
+A class is a blueprint for creating objects.
+</p>
+
+<pre>
+class Student:
+
+    def __init__(self,name):
+        self.name = name
+
+    def display(self):
+        print(self.name)
+
+s = Student("Harish")
+
+s.display()
+</pre>
+
+<h3>Main OOP Concepts</h3>
+
+<ul>
+<li>Class</li>
+<li>Object</li>
+<li>Inheritance</li>
+<li>Polymorphism</li>
+<li>Encapsulation</li>
+<li>Abstraction</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Python+OOP+tutorial">
+▶ Watch Python OOP
+</a>
+`
+}
+
+]
+
+},
+
+
+/* ================= JAVA ================= */
+
+java: {
+
+title:"☕ Java Programming",
+
+description:"Learn Java programming from basic to object oriented programming.",
+
+lessons:[
+
+{
+title:"Java Introduction",
+content:`
+
+<h2>Java Introduction</h2>
+
+<p>
+Java is a popular object-oriented programming language.
+</p>
+
+<h3>Features of Java</h3>
+
+<ul>
+<li>Object oriented</li>
+<li>Platform independent</li>
+<li>Secure</li>
+<li>Robust</li>
+<li>Portable</li>
+</ul>
+
+<h3>First Java Program</h3>
+
+<pre>
+class Hello
+{
+    public static void main(String[] args)
+    {
+        System.out.println("Hello World");
+    }
+}
+</pre>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Java+beginner+tutorial">
+▶ Watch Java Tutorial
+</a>
+`
+},
+
+{
+title:"Variables",
+content:`
+
+<h2>Java Variables</h2>
+
+<p>
+Variables store data in memory.
+</p>
+
+<pre>
+int age = 20;
+double marks = 90.5;
+char grade = 'A';
+String name = "Student";
+boolean pass = true;
+</pre>
+
+<h3>Data Types</h3>
+
+<ul>
+<li>int</li>
+<li>float</li>
+<li>double</li>
+<li>char</li>
+<li>boolean</li>
+<li>String</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Java+variables+data+types">
+▶ Watch Java Variables
+</a>
+`
+},
+
+{
+title:"If Else",
+content:`
+
+<h2>Java If Else</h2>
+
+<pre>
+int age = 20;
+
+if(age >= 18)
+{
+    System.out.println("Eligible");
+}
+else
+{
+    System.out.println("Not Eligible");
+}
+</pre>
+
+<p>
+If condition is true, the first block executes.
+Otherwise the else block executes.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Java+if+else+tutorial">
+▶ Watch If Else Tutorial
+</a>
+`
+},
+
+{
+title:"Loops",
+content:`
+
+<h2>Loops in Java</h2>
+
+<h3>For Loop</h3>
+
+<pre>
+for(int i=1;i<=5;i++)
+{
+    System.out.println(i);
+}
+</pre>
+
+<h3>While Loop</h3>
+
+<pre>
+int i=1;
+
+while(i<=5)
+{
+    System.out.println(i);
+    i++;
+}
+</pre>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Java+loops+tutorial">
+▶ Watch Java Loops
+</a>
+`
+},
+
+{
+title:"Arrays",
+content:`
+
+<h2>Arrays</h2>
+
+<p>
+An array stores multiple values of the same type.
+</p>
+
+<pre>
+int numbers[] = {10,20,30,40,50};
+
+for(int i=0;i<numbers.length;i++)
+{
+    System.out.println(numbers[i]);
+}
+</pre>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Java+arrays+tutorial">
+▶ Watch Java Arrays
+</a>
+`
+},
+
+{
+title:"Class and Object",
+content:`
+
+<h2>Class and Object</h2>
+
+<pre>
+class Student
+{
+    String name;
+
+    void display()
+    {
+        System.out.println(name);
+    }
+}
+
+class Main
+{
+    public static void main(String[] args)
+    {
+        Student s = new Student();
+
+        s.name = "Harish";
+
+        s.display();
+    }
+}
+</pre>
+
+<p>
+A class is a blueprint and an object is an instance of a class.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Java+class+object+tutorial">
+▶ Watch Class and Object
+</a>
+`
+},
+
+{
+title:"Inheritance",
+content:`
+
+<h2>Inheritance</h2>
+
+<p>
+Inheritance allows one class to acquire properties and methods of another class.
+</p>
+
+<pre>
+class Animal
+{
+    void sound()
+    {
+        System.out.println("Animal Sound");
+    }
+}
+
+class Dog extends Animal
+{
+    void bark()
+    {
+        System.out.println("Dog Barking");
+    }
+}
+</pre>
+
+<p>
+The extends keyword is used for inheritance.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Java+inheritance+tutorial">
+▶ Watch Java Inheritance
+</a>
+`
+}
+
+]
+
+},
+
+
+/* ================= WEB DEVELOPMENT ================= */
+
+web: {
+
+title:"🌐 Web Development",
+
+description:"Learn HTML, CSS and JavaScript and create websites.",
+
+lessons:[
+
+{
+title:"HTML Introduction",
+content:`
+
+<h2>HTML</h2>
+
+<p>
+HTML stands for HyperText Markup Language.
+It is used to create the structure of a web page.
+</p>
+
+<pre>
+<!DOCTYPE html>
+
+&lt;html&gt;
+
+&lt;head&gt;
+&lt;title&gt;My Website&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;h1&gt;Hello World&lt;/h1&gt;
+
+&lt;p&gt;Welcome to my website.&lt;/p&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+</pre>
+
+<h3>Important HTML Tags</h3>
+
+<ul>
+<li>h1 - Heading</li>
+<li>p - Paragraph</li>
+<li>a - Link</li>
+<li>img - Image</li>
+<li>button - Button</li>
+<li>input - Input field</li>
+<li>div - Container</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=HTML+full+course+beginner">
+▶ Watch HTML Course
+</a>
+`
+},
+
+{
+title:"CSS",
+content:`
+
+<h2>CSS</h2>
+
+<p>
+CSS stands for Cascading Style Sheets.
+CSS is used to design HTML pages.
+</p>
+
+<pre>
+body
+{
+    background-color: lightblue;
+}
+
+h1
+{
+    color: blue;
+    text-align: center;
+}
+</pre>
+
+<h3>CSS Properties</h3>
+
+<ul>
+<li>color</li>
+<li>background</li>
+<li>font-size</li>
+<li>margin</li>
+<li>padding</li>
+<li>border</li>
+<li>display</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=CSS+full+course+beginner">
+▶ Watch CSS Course
+</a>
+`
+},
+
+{
+title:"JavaScript",
+content:`
+
+<h2>JavaScript</h2>
+
+<p>
+JavaScript makes websites interactive.
+</p>
+
+<pre>
+&lt;button onclick="hello()"&gt;
+Click Me
+&lt;/button&gt;
+
+&lt;script&gt;
+
+function hello()
+{
+    alert("Hello Student!");
+}
+
+&lt;/script&gt;
+</pre>
+
+<h3>JavaScript Uses</h3>
+
+<ul>
+<li>Buttons</li>
+<li>Forms</li>
+<li>Calculations</li>
+<li>Animations</li>
+<li>Dynamic content</li>
+<li>Web applications</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=JavaScript+full+course+beginner">
+▶ Watch JavaScript Course
+</a>
+`
+},
+
+{
+title:"Forms",
+content:`
+
+<h2>HTML Forms</h2>
+
+<p>
+Forms are used to collect user information.
+</p>
+
+<pre>
+&lt;form&gt;
+
+&lt;label&gt;Name&lt;/label&gt;
+
+&lt;input type="text"&gt;
+
+&lt;label&gt;Email&lt;/label&gt;
+
+&lt;input type="email"&gt;
+
+&lt;button&gt;
+Submit
+&lt;/button&gt;
+
+&lt;/form&gt;
+</pre>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=HTML+forms+tutorial">
+▶ Watch HTML Forms
+</a>
+`
+},
+
+{
+title:"Website Project",
+content:`
+
+<h2>Mini Website Project</h2>
+
+<p>
+You can combine HTML, CSS and JavaScript to create a complete website.
+</p>
+
+<pre>
+&lt;h1&gt;Student Website&lt;/h1&gt;
+
+&lt;p&gt;Welcome Student&lt;/p&gt;
+
+&lt;button onclick="showMessage()"&gt;
+Click
+&lt;/button&gt;
+
+&lt;script&gt;
+
+function showMessage()
+{
+    alert("Welcome!");
+}
+
+&lt;/script&gt;
+</pre>
+
+<p>
+HTML creates the structure.
+CSS creates the design.
+JavaScript adds functionality.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=HTML+CSS+JavaScript+project+beginner">
+▶ Watch Website Project
+</a>
+`
+}
+
+]
+
+},
+
+
+/* ================= DSA ================= */
+
+dsa: {
+
+title:"🧠 Data Structures & Algorithms",
+
+description:"Learn important data structures and algorithms.",
+
+lessons:[
+
+{
+title:"Introduction",
+content:`
+
+<h2>Data Structures</h2>
+
+<p>
+A data structure is a method of organizing and storing data
+so that it can be used efficiently.
+</p>
+
+<h3>Types</h3>
+
+<ul>
+<li>Array</li>
+<li>Linked List</li>
+<li>Stack</li>
+<li>Queue</li>
+<li>Tree</li>
+<li>Graph</li>
+<li>Hash Table</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=data+structures+algorithms+beginner">
+▶ Watch DSA Course
+</a>
+`
+},
+
+{
+title:"Array",
+content:`
+
+<h2>Array</h2>
+
+<p>
+An array stores elements in continuous memory locations.
+</p>
+
+<pre>
+arr = [10,20,30,40,50]
+
+print(arr[0])
+print(arr[3])
+</pre>
+
+<h3>Advantages</h3>
+
+<ul>
+<li>Fast access</li>
+<li>Simple structure</li>
+<li>Easy traversal</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=array+data+structure+tutorial">
+▶ Watch Arrays
+</a>
+`
+},
+
+{
+title:"Linked List",
+content:`
+
+<h2>Linked List</h2>
+
+<p>
+A linked list consists of nodes.
+Each node contains data and a link to another node.
+</p>
+
+<pre>
+class Node:
+
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+</pre>
+
+<h3>Types</h3>
+
+<ul>
+<li>Singly Linked List</li>
+<li>Doubly Linked List</li>
+<li>Circular Linked List</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=linked+list+data+structure">
+▶ Watch Linked List
+</a>
+`
+},
+
+{
+title:"Stack",
+content:`
+
+<h2>Stack</h2>
+
+<p>
+Stack follows LIFO - Last In First Out.
+</p>
+
+<p>Examples:</p>
+
+<ul>
+<li>Undo operation</li>
+<li>Browser history</li>
+<li>Function calls</li>
+</ul>
+
+<pre>
+stack = []
+
+stack.append(10)
+stack.append(20)
+stack.append(30)
+
+print(stack.pop())
+</pre>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=stack+data+structure+tutorial">
+▶ Watch Stack
+</a>
+`
+},
+
+{
+title:"Queue",
+content:`
+
+<h2>Queue</h2>
+
+<p>
+Queue follows FIFO - First In First Out.
+</p>
+
+<p>Examples:</p>
+
+<ul>
+<li>Printer queue</li>
+<li>Ticket booking</li>
+<li>CPU scheduling</li>
+</ul>
+
+<pre>
+queue = []
+
+queue.append(10)
+queue.append(20)
+queue.append(30)
+
+print(queue.pop(0))
+</pre>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=queue+data+structure+tutorial">
+▶ Watch Queue
+</a>
+`
+},
+
+{
+title:"Searching",
+content:`
+
+<h2>Searching Algorithms</h2>
+
+<h3>Linear Search</h3>
+
+<pre>
+arr = [10,20,30,40]
+
+key = 30
+
+for i in range(len(arr)):
+
+    if arr[i] == key:
+        print("Found")
+</pre>
+
+<h3>Binary Search</h3>
+
+<p>
+Binary search works on sorted data.
+It repeatedly divides the search area into two parts.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=linear+binary+search+tutorial">
+▶ Watch Searching Algorithms
+</a>
+`
+},
+
+{
+title:"Sorting",
+content:`
+
+<h2>Sorting Algorithms</h2>
+
+<p>
+Sorting means arranging data in ascending or descending order.
+</p>
+
+<h3>Common Sorting Algorithms</h3>
+
+<ul>
+<li>Bubble Sort</li>
+<li>Selection Sort</li>
+<li>Insertion Sort</li>
+<li>Merge Sort</li>
+<li>Quick Sort</li>
+</ul>
+
+<pre>
+arr = [5,2,8,1]
+
+arr.sort()
+
+print(arr)
+</pre>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=sorting+algorithms+DSA">
+▶ Watch Sorting Algorithms
+</a>
+`
+}
+
+]
+
+},
+
+
+/* ================= AI ================= */
+
+ai: {
+
+title:"🤖 Artificial Intelligence",
+
+description:"Learn the basic concepts of Artificial Intelligence.",
+
+lessons:[
+
+{
+title:"AI Introduction",
+content:`
+
+<h2>Artificial Intelligence</h2>
+
+<p>
+Artificial Intelligence is the field of computer science
+that develops systems capable of performing tasks that
+normally require human intelligence.
+</p>
+
+<h3>Examples</h3>
+
+<ul>
+<li>Chatbots</li>
+<li>Voice assistants</li>
+<li>Self-driving vehicles</li>
+<li>Recommendation systems</li>
+<li>Face recognition</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=Artificial+Intelligence+beginner+course">
+▶ Watch AI Course
+</a>
+`
+},
+
+{
+title:"Intelligent Agents",
+content:`
+
+<h2>Intelligent Agents</h2>
+
+<p>
+An intelligent agent perceives its environment
+and performs actions to achieve a goal.
+</p>
+
+<h3>Examples</h3>
+
+<ul>
+<li>Robot</li>
+<li>Self-driving car</li>
+<li>Chatbot</li>
+<li>Game AI</li>
+</ul>
+
+<p>
+Basic structure:
+</p>
+
+<pre>
+Environment
+     ↓
+   Agent
+     ↓
+   Action
+</pre>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=intelligent+agents+AI">
+▶ Watch Intelligent Agents
+</a>
+`
+},
+
+{
+title:"Search Algorithms",
+content:`
+
+<h2>AI Search Algorithms</h2>
+
+<p>
+Search algorithms are used to find solutions to problems.
+</p>
+
+<ul>
+<li>Breadth First Search</li>
+<li>Depth First Search</li>
+<li>Uniform Cost Search</li>
+<li>Greedy Search</li>
+<li>A* Search</li>
+</ul>
+
+<h3>A* Formula</h3>
+
+<pre>
+f(n) = g(n) + h(n)
+</pre>
+
+<p>
+g(n) represents the cost from the start node.
+h(n) represents the estimated cost to the goal.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=A+star+algorithm+AI+tutorial">
+▶ Watch A* Algorithm
+</a>
+`
+},
+
+{
+title:"AI Applications",
+content:`
+
+<h2>Applications of AI</h2>
+
+<ul>
+<li>Healthcare</li>
+<li>Agriculture</li>
+<li>Education</li>
+<li>Banking</li>
+<li>Cybersecurity</li>
+<li>Transportation</li>
+<li>Manufacturing</li>
+</ul>
+
+<p>
+AI is becoming an important technology in many industries.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=AI+applications+real+world">
+▶ Watch AI Applications
+</a>
+`
+}
+
+]
+
+},
+
+
+/* ================= MACHINE LEARNING ================= */
+
+ml: {
+
+title:"📊 Machine Learning",
+
+description:"Learn the fundamentals of Machine Learning.",
+
+lessons:[
+
+{
+title:"ML Introduction",
+content:`
+
+<h2>Machine Learning</h2>
+
+<p>
+Machine Learning is a branch of AI that allows computers
+to learn patterns from data and make predictions.
+</p>
+
+<h3>Examples</h3>
+
+<ul>
+<li>Spam detection</li>
+<li>Movie recommendations</li>
+<li>House price prediction</li>
+<li>Fraud detection</li>
+<li>Image recognition</li>
+</ul>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=machine+learning+beginner+course">
+▶ Watch Machine Learning Course
+</a>
+`
+},
+
+{
+title:"Supervised Learning",
+content:`
+
+<h2>Supervised Learning</h2>
+
+<p>
+In supervised learning, the model learns from labeled data.
+</p>
+
+<h3>Examples</h3>
+
+<ul>
+<li>Classification</li>
+<li>Regression</li>
+</ul>
+
+<h3>Classification</h3>
+
+<p>
+Classification predicts categories.
+</p>
+
+<p>
+Example: Spam or Not Spam.
+</p>
+
+<h3>Regression</h3>
+
+<p>
+Regression predicts numerical values.
+</p>
+
+<p>
+Example: House price prediction.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=supervised+machine+learning+tutorial">
+▶ Watch Supervised Learning
+</a>
+`
+},
+
+{
+title:"Unsupervised Learning",
+content:`
+
+<h2>Unsupervised Learning</h2>
+
+<p>
+Unsupervised learning works with data without labeled answers.
+</p>
+
+<h3>Common Method</h3>
+
+<p>
+Clustering groups similar data together.
+</p>
+
+<h3>Example</h3>
+
+<p>
+A company can group customers based on their purchasing behavior.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=unsupervised+machine+learning+tutorial">
+▶ Watch Unsupervised Learning
+</a>
+`
+},
+
+{
+title:"ML Workflow",
+content:`
+
+<h2>Machine Learning Workflow</h2>
+
+<pre>
+Collect Data
+     ↓
+Clean Data
+     ↓
+Prepare Data
+     ↓
+Train Model
+     ↓
+Test Model
+     ↓
+Evaluate
+     ↓
+Prediction
+</pre>
+
+<p>
+Good quality data is very important for machine learning.
+</p>
+
+<a class="video-btn"
+target="_blank"
+href="https://www.youtube.com/results?search_query=machine+learning+workflow">
+▶ Watch ML Workflow
+</a>
+`
+}
+
+]
+
+}
+
+};
+
+
+/* ==============================
+   VARIABLES
+================================ */
+
+let currentCourse = "";
+let currentLesson = 0;
+
+
+/* ==============================
+   OPEN COURSE
+================================ */
+
+function openCourse(courseName)
+{
+
+currentCourse = courseName;
+
+currentLesson = 0;
+
+let course = courses[courseName];
+
+document.getElementById("readerBox").style.display = "block";
+
+document.getElementById("courseTitle").innerHTML =
+course.title;
+
+document.getElementById("courseDescription").innerHTML =
+course.description;
+
+let buttons = "";
+
+course.lessons.forEach(function(lesson,index)
+{
+
+buttons +=
+`
+<button onclick="showLesson(${index})">
+${index+1}. ${lesson.title}
+</button>
+`;
+
+});
+
+document.getElementById("lessonButtons").innerHTML = buttons;
+
+showLesson(0);
+
+}
+
+
+/* ==============================
+   SHOW LESSON
+================================ */
+
+function showLesson(index)
+{
+
+currentLesson = index;
+
+let lesson =
+courses[currentCourse].lessons[index];
+
+document.getElementById("lessonContent").innerHTML =
+lesson.content;
+
+window.location.hash = "reader";
+
+}
+
+
+/* ==============================
+   COMPLETE LESSON
+================================ */
+
+function completeLesson()
+{
+
+let key =
+currentCourse + "_" + currentLesson;
+
+localStorage.setItem(key,"completed");
+
+alert("✅ Lesson completed!");
+
+updateProgress();
+
+}
+
+
+/* ==============================
+   PROGRESS
+================================ */
+
+function updateProgress()
+{
+
+let total = 0;
+
+let completed = 0;
+
+for(let course in courses)
+{
+
+courses[course].lessons.forEach(function(lesson,index)
+{
+
+total++;
+
+let key = course + "_" + index;
+
+if(localStorage.getItem(key) === "completed")
+{
+completed++;
+}
+
+});
+
+}
+
+let percentage =
+Math.round((completed / total) * 100);
+
+document.getElementById("progressFill").style.width =
+percentage + "%";
+
+document.getElementById("progressText").innerHTML =
+percentage + "% completed (" +
+completed +
+"/" +
+total +
+" lessons)";
+
+}
+
+
+/* ==============================
+   CLOSE COURSE
+================================ */
+
+function closeCourse()
+{
+
+document.getElementById("readerBox").style.display =
+"none";
+
+document.getElementById("courses").scrollIntoView();
+
+}
+
+
+/* ==============================
+   SEARCH
+================================ */
+
+function searchCourses()
+{
+
+let input =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+let cards =
+document.querySelectorAll(".course-card");
+
+cards.forEach(function(card)
+{
+
+let name =
+card.getAttribute("data-name");
+
+if(name.includes(input))
+{
+card.style.display = "block";
+}
+else
+{
+card.style.display = "none";
+}
+
+});
+
+}
+
+
+/* ==============================
+   LOGIN
+================================ */
+
+function login()
+{
+
+let name =
+document.getElementById("studentName").value;
+
+let email =
+document.getElementById("studentEmail").value;
+
+if(name === "" || email === "")
+{
+
+document.getElementById("loginMessage").innerHTML =
+"❌ Please enter your name and email.";
+
+return;
+
+}
+
+localStorage.setItem("studentName",name);
+
+localStorage.setItem("studentEmail",email);
+
+document.getElementById("loginMessage").innerHTML =
+"✅ Login successful! Welcome " + name;
+
+document.getElementById("certificateName").innerHTML =
+name;
+
+}
+
+
+/* ==============================
+   QUIZ
+================================ */
+
+function submitQuiz()
+{
+
+let score = 0;
+
+let q1 =
+document.querySelector('input[name="q1"]:checked');
+
+let q2 =
+document.querySelector('input[name="q2"]:checked');
+
+let q3 =
+document.querySelector('input[name="q3"]:checked');
+
+let q4 =
+document.querySelector('input[name="q4"]:checked');
+
+let q5 =
+document.querySelector('input[name="q5"]:checked');
+
+
+if(q1 && q1.value === "python")
+score++;
+
+if(q2 && q2.value === "p")
+score++;
+
+if(q3 && q3.value === "class")
+score++;
+
+if(q4 && q4.value === "queue")
+score++;
+
+if(q5 && q5.value === "artificial")
+score++;
+
+
+document.getElementById("quizResult").innerHTML =
+"Your Score: " + score + " / 5";
+
+
+if(score >= 4)
+{
+
+document.getElementById("certificate").style.display =
+"block";
+
+let name =
+localStorage.getItem("studentName") || "Student";
+
+document.getElementById("certificateName").innerHTML =
+name;
+
+}
+
+}
+
+
+/* ==============================
+   DARK MODE
+================================ */
+
+function toggleDark()
+{
+
+document.body.classList.toggle("dark");
+
+}
+
+
+/* ==============================
+   PAGE LOAD
+================================ */
+
+window.onload = function()
+{
+
+updateProgress();
+
+let name =
+localStorage.getItem("studentName");
+
+if(name)
+{
+
+document.getElementById("studentName").value =
+name;
+
+document.getElementById("certificateName").innerHTML =
+name;
+
+}
+
+};
+
+</script>
+
+</body>
+</html>
